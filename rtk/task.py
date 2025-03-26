@@ -411,6 +411,7 @@ class KrakenLikeCommand(Task):
         self._output_files: List[str] = []
         self.max_time_per_op: int = max_time_per_op
         self.desc: str = desc
+        print(" ".join(self.command))
         if "R" not in self.command:
             raise NameError("R is missing in the Kraken-like command (Required for xargs)")
 
@@ -467,6 +468,8 @@ class KrakenLikeCommand(Task):
 
             out = []
 
+            print("cmd : ", cmd)
+
             proc = subprocess.Popen(
                 cmd,
                 text=True,
@@ -484,7 +487,7 @@ class KrakenLikeCommand(Task):
                         break
                     if len(set(out)) == len(set(input_list)):
                         break
-
+                
                 return_code = proc.wait()
              
                 if proc.returncode == 1:
