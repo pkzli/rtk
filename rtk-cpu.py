@@ -20,7 +20,7 @@ import time
 
 start = time.time()
 
-folders = glob.glob("images/doc2")
+folders = glob.glob("images/doc3")
 
 if len(argv) == 2:
     num_workers = int(argv[1])
@@ -38,13 +38,13 @@ for i in range(0, len(folders), 4):
     print("[Task] Segment, size of batch ", len(batch))
     yaltai = YALTAiCommand(
         batch,
-        binary="env/bin/yaltai",
+        binary="yaltaienv/bin/yaltai",
         device="cpu",
         yolo_model="models/ladas-1280-l.pt",
         verbose=True,
         raise_on_error=False,
         allow_failure=False,
-        multiprocess=30,  # GPU Memory // 5gb
+        multiprocess=4,  # GPU Memory // 5gb
         check_content=False,
         line_model = "models/blla.mlmodel"
     )
@@ -63,11 +63,11 @@ for i in range(0, len(folders), 4):
     print("[Task] OCR")
     kraken = KrakenRecognizerCommand(
         yaltai.output_files,
-        binary="env/bin/kraken",
+        binary="krakenv/bin/kraken",
         #binary="yaltaienv/bin/kraken",
         device="cpu",
         model="models/catmus-print-fondue-large.mlmodel",
-        multiprocess=30,  # GPU Memory // 3gb
+        multiprocess=4,  # GPU Memory // 3gb
         check_content=True  # Required ?
     )
     kraken.process()

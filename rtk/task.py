@@ -468,8 +468,6 @@ class KrakenLikeCommand(Task):
 
             out = []
 
-            print("cmd : ", cmd)
-
             proc = subprocess.Popen(
                 cmd,
                 text=True,
