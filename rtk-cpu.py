@@ -20,7 +20,7 @@ import time
 
 start = time.time()
 
-folders = glob.glob("images/doc3")
+folders = glob.glob("books/batch_6/*")
 
 if len(argv) == 2:
     num_workers = int(argv[1])
@@ -28,10 +28,11 @@ else:
     num_workers = 5
 
 for i in range(0, len(folders), 4):
+    #print("processing folders ", folders[i], folders[i+1], folders[i+2], folders[i+3])
     batch = [
         file
         for folder in folders[i:i+4]
-        for file in glob.glob(f"{folder}/*.png")
+        for file in glob.glob(f"{folder}/*.jpg")
     ]
     startYalt = time.time()
     # Apply YALTAi
@@ -44,7 +45,7 @@ for i in range(0, len(folders), 4):
         verbose=True,
         raise_on_error=False,
         allow_failure=False,
-        multiprocess=4,  # GPU Memory // 5gb
+        multiprocess=10,  # GPU Memory // 5gb
         check_content=False,
         line_model = "models/blla.mlmodel"
     )
@@ -67,7 +68,7 @@ for i in range(0, len(folders), 4):
         #binary="yaltaienv/bin/kraken",
         device="cpu",
         model="models/catmus-print-fondue-large.mlmodel",
-        multiprocess=4,  # GPU Memory // 3gb
+        multiprocess=10,  # GPU Memory // 3gb
         check_content=True  # Required ?
     )
     kraken.process()
