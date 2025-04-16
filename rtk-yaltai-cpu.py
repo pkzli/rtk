@@ -24,7 +24,7 @@ print("base folder name : "+argv[1])
 print("processing batch : "+argv[2])
 folders = glob.glob(argv[1]+argv[2]+"/*")
 
-print("kraken model : "+argv[3])
+print("yolo model : "+argv[3])
 
 if len(argv) == 2:
     num_workers = int(argv[1])
@@ -45,7 +45,7 @@ for i in range(0, len(folders), 4):
         batch,
         binary="yaltaienv/bin/yaltai",
         device="cpu",
-        yolo_model="models/ladas-960-l.pt",
+        yolo_model=argv[3],
         verbose=True,
         raise_on_error=False,
         allow_failure=False,
@@ -59,6 +59,7 @@ for i in range(0, len(folders), 4):
     print("Yaltai output files len ", len(yaltai.output_files)) 
     
     # Clean-up the relative filepath of Kraken Serialization
+    '''
     print("[Task] Clean-Up Serialization")
     cleanup = KrakenAltoCleanUpCommand(yaltai.output_files)
     cleanup.process()
@@ -71,14 +72,14 @@ for i in range(0, len(folders), 4):
         binary="krakenv/bin/kraken",
         #binary="yaltaienv/bin/kraken",
         device="cpu",
-        model=argv[3],
+        model="models/catmus-print-fondue-large.mlmodel",
         multiprocess=10,  # GPU Memory // 3gb
         check_content=True  # Required ?
     )
     kraken.process()
     endKrak = time.time()
     print("[Time] Kraken: ", endKrak - startKrak)
-    
+    '''
 
 end = time.time()
 print("[Time] total: ", end - start)

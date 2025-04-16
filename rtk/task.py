@@ -596,7 +596,7 @@ class KrakenRecognizerCommand(KrakenLikeCommand):
             options += " --raise-on-error "
         super(KrakenRecognizerCommand, self).__init__(
             *args,
-            command=f"{binary} {options} --device {device} -f xml --{input_format} --template output.template R ocr -m {model}".split(" "),
+            command=f"{binary} {options} --device {device} -f xml --{input_format} --template template_output R ocr -m {model}".split(" "),
             allow_failure=not raise_on_error,
             output_format="xml",
             check_content=check_content,
